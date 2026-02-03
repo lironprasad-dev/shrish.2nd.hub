@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NEB Science GPA Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+body{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+.container{width:960px;background:#fff;border-radius:20px;box-shadow:0 30px 60px rgba(0,0,0,0.35);overflow:hidden;perspective:1500px;transform-style:preserve-3d}
+.header{background:linear-gradient(135deg,#1e3c72,#2a5298);color:#fff;padding:30px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+.header h1{font-size:30px;font-weight:700;letter-spacing:1px;text-shadow:0 0 8px #1e3c72,0 0 15px #2a5298}
+.content{padding:35px}
+.subject{background:#f7f9fc;border-radius:16px;padding:20px;margin-bottom:22px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;align-items:center;box-shadow:0 8px 30px rgba(0,0,0,0.2);transition:all 0.4s;transform-style:preserve-3d}
+.subject:hover{transform: translateY(-10px) rotateX(3deg) rotateY(3deg);box-shadow:0 15px 50px rgba(0,0,0,0.35)}
+.subject h3{grid-column:1/4;color:#1e3c72;font-size:18px;margin-bottom:15px;font-weight:600;text-shadow:0 0 5px #1e3c72}
+input[type=number]{padding:12px;border-radius:10px;border:1px solid #ccc;font-size:15px;transition:all 0.3s}
+input[type=number]:focus{border-color:#2a5298;outline:none;box-shadow:0 0 14px rgba(42,82,152,0.6)}
+select{padding:12px;border-radius:10px;border:1px solid #ccc;font-size:15px;transition:all 0.3s}
+select:focus{border-color:#2a5298;outline:none;box-shadow:0 0 14px rgba(42,82,152,0.6)}
+.actions{display:flex;gap:15px;margin-top:28px}
+.actions button{flex:1;padding:16px;font-size:17px;font-weight:700;color:#fff;background:linear-gradient(135deg,#1e3c72,#2a5298);border:none;border-radius:12px;cursor:pointer;box-shadow:0 0 15px rgba(30,82,152,0.7),0 0 25px rgba(42,82,152,0.5) inset;transition:all 0.3s}
+.actions button:hover{box-shadow:0 0 30px rgba(30,82,152,0.9),0 0 40px rgba(42,82,152,0.6) inset;transform:translateY(-3px)}
+#result{margin-top:30px;font-size:24px;font-weight:800;text-align:center;text-shadow:0 0 12px #2a5298,0 0 25px #1e3c72}
+.pass{color:#1e3c72}
+.fail{color:#c62828;text-shadow:0 0 10px #c62828,0 0 18px #ff1744}
+.table{width:100%;border-collapse:collapse;margin-top:28px;box-shadow:0 0 20px rgba(0,0,0,0.25);border-radius:14px;overflow:hidden;transform:translateZ(20px)}
+.table th,.table td{border:1px solid #ccc;padding:14px;text-align:center;font-size:15px;transition:0.3s}
+.table th{background:linear-gradient(135deg,#1e3c72,#2a5298);color:#fff;font-weight:700;text-shadow:0 0 6px rgba(0,0,0,0.4)}
+.table tr:nth-child(even){background:#f0f4f8}
+.table tr:nth-child(odd){background:#fff}
+.table tr:hover{background:#e1f0ff;box-shadow:0 0 12px rgba(42,82,152,0.6)}
+.footer{text-align:center;font-size:14px;color:#555;margin-top:22px}
+@media print{body{background:#fff}.actions{display:none}.container{box-shadow:none;border-radius:0;width:100%}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>NEB Science GPA Calculator</h1>
+</div>
+<div class="content">
+<div class="subject"><h3>Physics</h3><input id="phyT" type="number" placeholder="Theory Marks"><input id="phyP" type="number" placeholder="Practical Marks"><select id="phyG"><option value="0">0.0 (NG)</option><option value="2.0">2.0 (C)</option><option value="2.4">2.4 (C+)</option><option value="2.8">2.8 (B)</option><option value="3.2">3.2 (B+)</option><option value="3.6">3.6 (A)</option><option value="4.0">4.0 (A+)</option></select></div>
+<div class="subject"><h3>Chemistry</h3><input id="chemT" type="number" placeholder="Theory Marks"><input id="chemP" type="number" placeholder="Practical Marks"><select id="chemG"><option value="0">0.0 (NG)</option><option value="2.0">2.0 (C)</option><option value="2.4">2.4 (C+)</option><option value="2.8">2.8 (B)</option><option value="3.2">3.2 (B+)</option><option value="3.6">3.6 (A)</option><option value="4.0">4.0 (A+)</option></select></div>
+<div class="subject"><h3>Mathematics</h3><input id="mathT" type="number" placeholder="Theory Marks"><input id="mathP" type="number" placeholder="Practical Marks"><select id="mathG"><option value="0">0.0 (NG)</option><option value="2.0">2.0 (C)</option><option value="2.4">2.4 (C+)</option><option value="2.8">2.8 (B)</option><option value="3.2">3.2 (B+)</option><option value="3.6">3.6 (A)</option><option value="4.0">4.0 (A+)</option></select></div>
+<div class="subject"><h3>Nepali</h3><input id="nepT" type="number" placeholder="Theory Marks"><input id="nepP" type="number" placeholder="Practical Marks"><select id="nepG"><option value="0">0.0 (NG)</option><option value="2.0">2.0 (C)</option><option value="2.4">2.4 (C+)</option><option value="2.8">2.8 (B)</option><option value="3.2">3.2 (B+)</option><option value="3.6">3.6 (A)</option><option value="4.0">4.0 (A+)</option></select></div>
+<div class="subject"><h3>English</h3><input id="engT" type="number" placeholder="Theory Marks"><input id="engP" type="number" placeholder="Practical Marks"><select id="engG"><option value="0">0.0 (NG)</option><option value="2.0">2.0 (C)</option><option value="2.4">2.4 (C+)</option><option value="2.8">2.8 (B)</option><option value="3.2">3.2 (B+)</option><option value="3.6">3.6 (A)</option><option value="4.0">4.0 (A+)</option></select></div>
+<div class="subject"><h3>Computer Science</h3><input id="compT" type="number" placeholder="Theory Marks"><input id="compP" type="number" placeholder="Practical Marks"><select id="compG"><option value="0">0.0 (NG)</option><option value="2.4">2.4 (C+)</option><option value="2.8">2.8 (B)</option><option value="3.2">3.2 (B+)</option><option value="3.6">3.6 (A)</option><option value="4.0">4.0 (A+)</option></select></div>
+<div class="actions"><button onclick="calculate()">Calculate GPA</button><button onclick="window.print()">Print Result</button></div>
+<div id="result"></div>
+<table class="table" id="gpaTable"><thead><tr><th>Subject</th><th>Theory</th><th>Practical</th><th>GPA</th><th>Grade</th></tr></thead><tbody></tbody></table>
+<div class="footer">NEB Class 12 Science Project</div>
+</div>
+<script>
+function gpFromMarks(theory, practical, maxTheory, maxPractical, isComputer=false){
+    let totalPercent = ((theory/maxTheory)*0.75 + (practical/maxPractical)*0.25)*100;
+    if(isComputer){totalPercent = ((theory/maxTheory)*0.5 + (practical/maxPractical)*0.5)*100;}
+    if(totalPercent>=90) return 4.0;
+    if(totalPercent>=80) return 3.6;
+    if(totalPercent>=70) return 3.2;
+    if(totalPercent>=60) return 2.8;
+    if(totalPercent>=50) return 2.4;
+    if(totalPercent>=40) return 2.0;
+    return 0;
+}
+function gradeFromGPA(gp){
+    if(gp==4) return 'A+';
+    if(gp>=3.6) return 'A';
+    if(gp>=3.2) return 'B+';
+    if(gp>=2.8) return 'B';
+    if(gp>=2.4) return 'C+';
+    if(gp>=2.0) return 'C';
+    return 'NG';
+}
+function calculate(){
+    let subjects=[['Physics','phy',75,25,false],['Chemistry','chem',75,25,false],['Mathematics','math',75,25,false],['Nepali','nep',75,25,false],['English','eng',75,25,false],['Computer Science','comp',50,50,true]];
+    let total=0;
+    let failed=false;
+    let tbody=document.querySelector('#gpaTable tbody');
+    tbody.innerHTML='';
+    subjects.forEach(s=>{
+        let t=Number(document.getElementById(s[1]+'T').value);
+        let p=Number(document.getElementById(s[1]+'P').value);
+        let sel=Number(document.getElementById(s[1]+'G').value);
+        let gp;
+        if(t>0 || p>0){
+            gp = gpFromMarks(t,p,s[2],s[3],s[5]);
+            if((!s[5] && t<30) || (s[5] && t<20)) failed=true;
+        }else gp=sel;
+        total+=gp;
+        tbody.innerHTML += `<tr><td>${s[0]}</td><td>${t||'-'}</td><td>${p||'-'}</td><td>${gp.toFixed(2)}</td><td>${gradeFromGPA(gp)}</td></tr>`;
+    });
+    if(failed){
+        result.innerHTML='RESULT: FAIL';
+        result.className='fail';
+        return;
+    }
+    let gpa=(total/6).toFixed(2);
+    result.innerHTML='RESULT: PASS<br>Final GPA: '+gpa;
+    result.className='pass';
+}
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"c9713adaf423434bb5dbce1b688e1a5d","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
